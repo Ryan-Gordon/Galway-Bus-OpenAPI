@@ -66,6 +66,55 @@ paths:
           
           
           $ref: '#/components/RouteArray
+  /stops/allStops:
+    get:
+      tags:
+        - Bus Stops
+      summary: Gets all Stops
+      operationId: getAllStops
+      responses:
+        '200':
+          description: successful operation
+          headers:
+            X-Rate-Limit:
+              description: calls per hour allowed by the user
+              schema:
+                type: integer
+                format: int32
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/StopsArray'
+            
+          '400':
+            description: Not found       
+  '/stops/{stop_ref}':
+    get:
+      tags:
+        - Bus Stops
+      summary: Get user by user name
+      operationId: getStopsByStopRef
+      parameters:
+        - name: stop_ref
+          in: path
+          description: Reference number of a particular stop
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/StopsArray'
+            application/xml:
+              schema:
+                $ref: '#/components/schemas/StopsArray'
+        
+        '404':
+          description: Stop not found   
+  
 
 components:
   schemas:
