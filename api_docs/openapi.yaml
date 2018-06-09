@@ -7,6 +7,27 @@ info:
   termsOfService: 'http://swagger.io/terms/'
 components:
   schemas:
+    RoutesArray:
+      content:
+        application/json:
+          schema:
+            type: array
+            items:
+              $ref: '#/components/schemas/Route'
+  
+    Route:
+      type: object
+      properties:
+        route_id:
+          type: integer
+          format: int64
+        full_route_name:
+          type: string
+        short_route_name:
+          type: string
+        
+      xml:
+        name: Route
     SchedulesArray:
       content:
         application/json:
