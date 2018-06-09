@@ -5,6 +5,24 @@ info:
   version: "1.0.0"
   title: Galway Bus
   termsOfService: 'http://swagger.io/terms/'
+paths:
+  /schedules/allSchedules:
+    get:
+      tags:
+        - schedules
+      summary: Get PDF links for all routes
+      operationId: getSchedules
+      responses:
+        '200':
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SchedulesArray'
+            application/xml:
+              schema:
+                $ref: '#/components/schemas/SchedulesArray'
+       
 
 components:
   schemas:
