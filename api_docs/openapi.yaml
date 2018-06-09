@@ -114,7 +114,31 @@ paths:
         
         '404':
           description: Stop not found   
-  
+  /stops/nearby:
+    get:
+      tags:
+        - Bus Stops
+      summary: Create user
+      description: This can only be done by the logged in user.
+      operationId: getNearbyStops
+      parameters:
+        - in: query
+          name: longitude
+          schema:
+            type: string
+          description: Coordinate
+        - in: query
+          name: latitude
+          schema:
+            type: string
+          description: Coordinate
+      responses:
+        '200':
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/StopsArray'
 
 components:
   schemas:
