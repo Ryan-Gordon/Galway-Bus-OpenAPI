@@ -1,0 +1,39 @@
+openapi: 3.0.0
+info:
+  description: |
+   A JSON based REST API 
+  version: "1.0.0"
+  title: Galway Bus
+  termsOfService: 'http://swagger.io/terms/'
+components:
+  schemas:
+    SchedulesArray:
+      content:
+        application/json:
+          schema:
+            type: array
+            items:
+              $ref: '#/components/schemas/Schedule'
+    Schedule:
+      type: object
+      properties:
+        route_id:
+          type: integer
+        route_name:
+          type: string
+        pdf_link:
+          type: string
+          
+      xml:
+        name: Tag
+    ApiResponse:
+      type: object
+      properties:
+        code:
+          type: integer
+          format: int32
+        type:
+          type: string
+        message:
+          type: string
+    
