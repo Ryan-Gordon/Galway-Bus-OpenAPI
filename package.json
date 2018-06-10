@@ -1,0 +1,29 @@
+{
+  "name": "Galway-Bus-OpenAPI",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "build": "tsc",
+    "dev": "ts-node ./server.ts",
+    "start": "nodemon ./dist/server.js",
+    "prod": "npm run build && npm run start"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Ryan-Gordon/Galway-Bus-OpenAPI.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "@types/express": "^4.16.0",
+    "exegesis-express": "^1.0.0",
+    "express": "^4.16.3",
+    "swagger-tools": "^0.10.3"
+  },
+  "bugs": {
+    "url": "https://github.com/Ryan-Gordon/Galway-Bus-OpenAPI/issues"
+  },
+  "homepage": "https://github.com/Ryan-Gordon/Galway-Bus-OpenAPI#readme"
+}
