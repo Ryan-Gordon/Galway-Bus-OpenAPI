@@ -45,6 +45,7 @@ paths:
         - routes
       summary: Get a list of stops for a route
       operationId: getStopsByRouteID
+      x-exegesis-controller: routeController
       parameters:
         - name: route_id
           in: path

@@ -25,3 +25,47 @@ export function getAllRoutes( ){
       }
     });
   }
+
+export function getStopsByRouteID(route_id){
+
+    return timedPromise(5000, function(resolve, reject) {
+        
+    return new Promise((resolve, reject)=> {
+
+        try{
+            //Just to prove were getting the params okay-- will remove
+            resolve("Route ID "+route_id+" passed from parent function")
+            
+        }
+        finally{
+
+        }
+    });
+});
+}
+/**
+ * timedPromise - A wrapper for other functions which return promises.
+ * Promises can stall a system if they neither resolve nor reject.
+ * 
+ * Unless a promise is resolved or rejected it will run continously.
+ * This timedPromise can be wrapped around another promise.
+ * 
+ * If the child promise does not finish within the specified amount of milliseconds
+ * the parent process will submit a promise rejection so the user isin't stuck in deadlock.
+ * 
+ * Got the idea from : https://stackoverflow.com/questions/32461271/nodejs-timeout-a-promise-if-failed-to-complete-in-time
+ *  
+ * @param ms 
+ * @param callback 
+ */
+function timedPromise(ms, callback) {
+    return new Promise(function(resolve, reject) {
+        // Set up the real work
+        callback(resolve, reject);
+
+        // Set up the timeout; if the defined work does not complete in time the promise will reject rather than waiting indefinetly
+        setTimeout(function() {
+            reject('Request timed out after ' + ms + ' ms');
+        }, ms);
+    });
+}
