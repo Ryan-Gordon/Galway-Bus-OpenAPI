@@ -1,3 +1,5 @@
+import * as request from 'request-promise-native';
+
 /**
  * Get PDF links for all routes
  *
@@ -26,22 +28,61 @@ export function getAllRoutes( ){
     });
   }
 
-export function getStopsByRouteID(route_id){
+export const getStopsByRouteID = async (route_id)=>{
+    let stopsArray = new Array();
+    let stop = new Object();
 
-    return timedPromise(5000, function(resolve, reject) {
+    let endpoint = 'https://data.dublinked.ie/cgi-bin/rtpi';
+    //Prepare a promise response for controller
+    return new Promise(async (resolve, reject)=> {
+    try{
         
-    return new Promise((resolve, reject)=> {
+        //Prepare http options for request
+        const options = {
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            json: true,
+            method: 'GET',
+            resolveWithFullResponse: true,
+            url: endpoint + '/routeinformation?operator=be&routeid=' + route_id
+        };
+        
+        const response = await request(options)
+        let results = response.body['results'];
 
-        try{
-            //Just to prove were getting the params okay-- will remove
-            resolve("Route ID "+route_id+" passed from parent function")
+        //Iterate over the routes. O(n) but there should be only 1; TODO: refactor
+        results.forEach(routeDetail => {
+            let goingFrom = routeDetail['origin'];
+            let goingTo = routeDetail['destination'];
+                
             
-        }
-        finally{
-
-        }
-    });
+            //Iterate over the stops array. Details to be parsed and then added to a new array
+            routeDetail['stops'].forEach(stopDetail => {
+                stop['stop_id'] =stopDetail['stopid'];
+                stop['stop_full_name'] =stopDetail['fullname'];
+                stop['stop_short_name'] =stopDetail['shortname'];
+                stop['longitude'] =stopDetail['longitude'];
+                stop['latitude'] =stopDetail['latitude'];
+                stop['from'] = goingFrom;
+                stop['to'] = goingTo;
+                
+                //Push new object to Array
+                stopsArray.push(stop);
+            });//stops forEach
+            
+        });//results forEach
+       
+        
+        resolve(stopsArray);
+  
+    }catch(e){
+        console.log("Catch"+ e)
+        reject(e)
+    }
 });
+
+
 }
 /**
  * timedPromise - A wrapper for other functions which return promises.
