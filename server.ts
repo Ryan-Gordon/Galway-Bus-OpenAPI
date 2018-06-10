@@ -94,7 +94,7 @@ createServer()
 .then(server => {
     server.listen(PORT);
     console.log("Listening on port 3000");
-    console.log("Try visiting http://localhost:3000/greet?name=Jason");
+    console.log("Docs are located at the /ui route!");
 })
 .catch(err => {
     console.error(err.stack);

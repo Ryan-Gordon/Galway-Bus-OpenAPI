@@ -8,7 +8,7 @@ paths:
   /schedules/allSchedules:
     get:
       tags:
-        - schedules
+        - Schedules
       summary: Get PDF links for all routes
       operationId: getSchedules
       x-exegesis-controller: scheduleController
@@ -22,11 +22,12 @@ paths:
             application/xml:
               schema:
                 $ref: '#/components/schemas/SchedulesArray'
-       
+        '400':
+            description: Error retreving schedules    
   /routes/allRoutes:
     get:
       tags:
-        - routes
+        - Routes
       summary: Gets all routes
       description: This can only be done by the logged in user.
       operationId: getAllRoutes
