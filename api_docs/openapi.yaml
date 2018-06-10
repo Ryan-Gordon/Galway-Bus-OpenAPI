@@ -11,6 +11,7 @@ paths:
         - schedules
       summary: Get PDF links for all routes
       operationId: getSchedules
+      x-exegesis-controller: scheduleController
       responses:
         '200':
           description: successful operation
@@ -26,9 +27,9 @@ paths:
     get:
       tags:
         - routes
-      summary: Create user
+      summary: Gets all routes
       description: This can only be done by the logged in user.
-      operationId: createUser
+      operationId: getAllRoutes
       responses:
         '200':
           description: successful operation
@@ -64,8 +65,6 @@ paths:
         '404':
           description: User not found 
           
-          
-          $ref: '#/components/RouteArray
   /stops/allStops:
     get:
       tags:
@@ -118,7 +117,7 @@ paths:
     get:
       tags:
         - Bus Stops
-      summary: Create user
+      summary: Gets all nearby stops
       description: This can only be done by the logged in user.
       operationId: getNearbyStops
       parameters:
