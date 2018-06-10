@@ -31,6 +31,7 @@ paths:
       summary: Gets all routes
       description: This can only be done by the logged in user.
       operationId: getAllRoutes
+      x-exegesis-controller: routeController
       responses:
         '200':
           description: successful operation

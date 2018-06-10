@@ -1,11 +1,11 @@
-import * as Schedules from '../services/schedulesService';
+import * as Routes from '../services/routeService';
 
 /**
  * getSchedules
  */
-module.exports.getSchedules = async (context) => {
+module.exports.getAllRoutes = async (context) => {
     
-    return await Schedules.getSchedules()
+    return await Routes.getAllRoutes()
         .then((result) => {
 
             //Here we can do mutations to the Promise result BEFORE its returned entirely
