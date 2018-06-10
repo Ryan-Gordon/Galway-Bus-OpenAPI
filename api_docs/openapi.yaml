@@ -145,8 +145,8 @@ components:
       type: object
       properties:
         stop_id:
-          type: int
-          format: int64
+          type: integer
+          format: int32
         stop_full_name:
           type: string
         stop_short_name:
@@ -163,26 +163,26 @@ components:
       xml:
         name: Order
     StopsArray:
-      content:
-        application/json:
-          schema:
-            type: array
-            items:
-              $ref: '#/components/schemas/Bus_Stop'
+      type: object
+      properties:
+        stops:
+          type: array
+          items:
+            $ref: '#/components/schemas/Bus_Stop'
     RoutesArray:
-      content:
-        application/json:
-          schema:
-            type: array
-            items:
-              $ref: '#/components/schemas/Route'
+      type: object
+      properties:
+        routes:
+          type: array
+          items:
+            $ref: '#/components/schemas/Route'
   
     Route:
       type: object
       properties:
         route_id:
           type: integer
-          format: int64
+          format: int32
         full_route_name:
           type: string
         short_route_name:
@@ -191,12 +191,12 @@ components:
       xml:
         name: Route
     SchedulesArray:
-      content:
-        application/json:
-          schema:
-            type: array
-            items:
-              $ref: '#/components/schemas/Schedule'
+      type: object
+      properties:
+        schedules:
+          type: array
+          items:
+            $ref: '#/components/schemas/Schedule'
     Schedule:
       type: object
       properties:
