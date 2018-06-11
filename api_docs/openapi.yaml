@@ -74,6 +74,7 @@ paths:
         - Bus Stops
       summary: Gets all Stops
       operationId: getAllStops
+      x-exegesis-controller: stopsController
       responses:
         '200':
           description: successful operation
