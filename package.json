@@ -22,6 +22,7 @@
     "@types/request-promise-native": "^1.0.15",
     "exegesis-express": "^1.0.0",
     "express": "^4.16.3",
+    "moment-timezone": "^0.5.17",
     "request": "^2.87.0",
     "request-promise-native": "^1.0.5",
     "swagger-tools": "^0.10.3"
