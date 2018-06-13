@@ -125,6 +125,7 @@ paths:
       summary: Gets all nearby stops
       description: This can only be done by the logged in user.
       operationId: getNearbyStops
+      x-exegesis-controller: stopsController
       parameters:
         - in: query
           name: longitude
