@@ -1,6 +1,7 @@
 import * as request from 'request-promise-native';
 import * as turf from '@turf/turf';
 import {Units} from '@turf/helpers';
+import * as moment from 'moment-timezone';
 /**
  * Get PDF links for all routes
  *
@@ -61,13 +62,57 @@ export const getStopsByStopRef = async (stop_ref) =>{
     return new Promise(async (resolve, reject)=> {
     try{
         
+        //Prepare http options for request
+        const options = {
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            json: true,
+            method: 'GET',
+            resolveWithFullResponse: true,
+            url: endpoint + '/busstopinformation?operator=be'
+        };
         
-        resolve(stopsArray);
-  
-    }catch(e){
-        console.log("Catch"+ e)
-        reject(e)
-    }
+        const response = await request(options)
+        let results = response.body['results'];
+
+        
+
+    console.log("Formatting stops")
+
+    await results.forEach(async (json_stop) =>{
+
+        const formatted_stop = await parse_stop(json_stop);
+
+
+        
+        if (formatted_stop['galway'] == true) {
+            //console.log("Found Galway Stop")
+            stopsArray.push(formatted_stop);
+
+            if (formatted_stop['stop_ref'] === stop_ref){
+                console.log('Found a stop')
+                console.log(formatted_stop)
+
+                await parseRealTimesForStopRef(formatted_stop['stop_ref']).then(times => {
+                    // Store the times for API response.
+                    stop['times'] = times;
+                    resolve(stop)
+                }).catch((error)=> {
+                    console.log("Error Encountered")
+                    //should probably throw an exception so it catches instead
+                    reject('Error parsing stop')
+                })
+            }
+        }
+
+    });
+    
+    
+  }
+  catch{
+    reject('Got an error')
+  }     
 });
 
 
@@ -94,6 +139,85 @@ export const getNearbyStops = async (longitude,latitude)=>{
 
 
 }
+
+const parseRealTimesForStopRef = async (stop_ref) =>{
+
+
+	return new Promise(async (resolve, reject) => {
+        let endpoint = 'https://data.dublinked.ie/cgi-bin/rtpi';
+        //Prepare http options for request
+        const options = {
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            json: true,
+            method: 'GET',
+            resolveWithFullResponse: true,
+            url: endpoint + '/realtimebusinformation?maxresults=10&operator=be&stopid=' + stop_ref
+        };
+        
+        const response = await request(options)
+        let results = response.body['results'];
+
+		resolve(await parse_multiple_times(results));
+		});
+		
+};
+/**
+ * Takes in a parameter representing all the incoming bus services for a stop.
+ * The incoming services are then fed into the parse_time function
+ * 
+ * @param results 
+ */
+const parse_multiple_times = async (results) => {
+    const times = await results.map(async (json_time) =>{
+        console.log(json_time)
+         return await parse_time(json_time);
+    });
+    console.log(times)
+    return Promise.all(times);
+}
+/**
+ * Takes in a parameter representing a Time on the timetable
+ * This is a bus service on route to the stop and contains relevant info for how far away it is
+ * 
+ * The time is formatted into an ISO string.
+ * 
+ * TODO: Needs try catch just incase
+ * @param json_time_object 
+ */
+const parse_time = async (json_time_object) =>{
+
+    let formatted_time = new Object();
+    formatted_time['display_name'] = json_time_object['destination'];
+    formatted_time['irish_display_name'] = json_time_object['destinationlocalized'];
+    formatted_time['timetable_id'] = json_time_object['route'];
+    formatted_time['low_floor'] = json_time_object['lowfloorstatus'] === 'yes';
+
+
+    // Convert 'dd/MM/yyyy HH:mm:ss' string into ISO format.
+
+    let date_string = json_time_object['departuredatetime'];
+
+    let is_dst = moment.tz("Europe/Dublin").isDST();
+
+    if ((date_string != null) && (date_string.length > 0)) {
+
+        var date_string_with_tz = "";
+
+        if (is_dst == true) {
+            date_string_with_tz = date_string + "+0100";
+        }
+        else {
+            date_string_with_tz = date_string + "+0000";
+        }
+
+        let m = moment(date_string_with_tz, "DD/MM/yyyy HH:mm:ssZ");
+        formatted_time['depart_timestamp'] = m.toISOString();
+    }
+
+    return formatted_time;
+};
 /**
  * Determine if a provided stop is in Galway
  * The API fetchs all stops in ireland 
