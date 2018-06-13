@@ -54,7 +54,6 @@ export const getAllStops = async () =>{
   }
 
 export const getStopsByStopRef = async (stop_ref) =>{
-    let stopsArray = new Array();
     let stop = new Object();
 
     let endpoint = 'https://data.dublinked.ie/cgi-bin/rtpi';
@@ -78,21 +77,24 @@ export const getStopsByStopRef = async (stop_ref) =>{
 
         
 
-    console.log("Formatting stops")
+        console.log("Formatting stops")
+        /**
+         * This bit of code is so dirty and expensive it deserves its own blockcomment
+         * 
+         * Iterates over every stop in ireland O(n) where n is 4000+
+         * 
+         * Calculates whether stop is in Galway (Doesnt need to be though)
+         * Then checks if the stop equals the stop_ref; 
+         * 
+         * How could we improve this?
+         * Caching stops would definetly help reduce the cost
+         * 
+         */
+        await results.forEach(async (json_stop) =>{
 
-    await results.forEach(async (json_stop) =>{
-
-        const formatted_stop = await parse_stop(json_stop);
-
-
-        
-        if (formatted_stop['galway'] == true) {
-            //console.log("Found Galway Stop")
-            stopsArray.push(formatted_stop);
+            const formatted_stop = await parse_stop(json_stop);
 
             if (formatted_stop['stop_ref'] === stop_ref){
-                console.log('Found a stop')
-                console.log(formatted_stop)
 
                 await parseRealTimesForStopRef(formatted_stop['stop_ref']).then(times => {
                     // Store the times for API response.
@@ -104,9 +106,9 @@ export const getStopsByStopRef = async (stop_ref) =>{
                     reject('Error parsing stop')
                 })
             }
-        }
+        
 
-    });
+        });
     
     
   }
@@ -120,17 +122,60 @@ export const getStopsByStopRef = async (stop_ref) =>{
 
 export const getNearbyStops = async (longitude,latitude)=>{
     let stopsArray = new Array();
-
     let endpoint = 'https://data.dublinked.ie/cgi-bin/rtpi';
     //Prepare a promise response for controller
     return new Promise(async (resolve, reject)=> {
     try{
+
+        //Prepare http options for request
+        const options = {
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            json: true,
+            method: 'GET',
+            resolveWithFullResponse: true,
+            url: endpoint + '/busstopinformation?operator=be'
+        };
         
+        const response = await request(options)
+        
+        let results = response.body['results'];
 
        
+        //Refactor this into a function
+        console.log("Formatting stops")
+        results.forEach(async (json_stop) =>{
+
+            const formatted_stop = await parse_stop(json_stop);
+
+            stopsArray.push(formatted_stop);
+            
+        });
+        //At the moment needs to be inline, serves as a predicate for the sort
+        const sort_distance = async (s1, s2) =>{
+
+            let point = turf.point([longitude, latitude]);
+
+            var p1 = await point_from_stop(s1);
+            var p2 = await point_from_stop(s2);
+            let units:Units ='meters';
+            let options = {units}
+
+            let d1 = turf.distance(point, p1, options);
+            let d2 = turf.distance(point, p2, options);
         
-        resolve(stopsArray);
-  
+            s1['distance'] = d1;
+            s2['distance'] = d2;
+        
+            return d1 - d2;
+        }
+        //The sort isint working right... yet
+        resolve(await results.sort(sort_distance).slice(0, 10));
+        
+        
+
+        
     }catch(e){
         console.log("Catch"+ e)
         reject(e)
@@ -140,9 +185,29 @@ export const getNearbyStops = async (longitude,latitude)=>{
 
 }
 
+const point_from_stop = async (stop) =>{
+
+    var lat = parseFloat(stop['latitude']);
+    var lon = parseFloat(stop['longitude']);
+
+    var stop_point = turf.point([lon, lat]);
+
+    return stop_point;
+
+}
+
+/**
+ * 
+ */
+
+
+/**
+ * Takes in a stop reference and queries the realtime API for bus services at that stop
+ * 
+ * Has 2 helper functions parse_multiple_times which invokes parse_time
+ * @param stop_ref 
+ */
 const parseRealTimesForStopRef = async (stop_ref) =>{
-
-
 	return new Promise(async (resolve, reject) => {
         let endpoint = 'https://data.dublinked.ie/cgi-bin/rtpi';
         //Prepare http options for request
