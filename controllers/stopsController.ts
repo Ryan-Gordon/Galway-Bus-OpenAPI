@@ -24,7 +24,7 @@ module.exports.getAllStops = async (context) => {
 /**
  * getSchedules
  */
-module.exports.getStopsByRouteID = async (context) => {
+module.exports.getStopsByStopRef = async (context) => {
     const stop_ref = await context.params.path.stop_ref;
     return await Stops.getStopsByStopRef(stop_ref)
         .then((result) => {

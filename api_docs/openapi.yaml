@@ -97,6 +97,7 @@ paths:
         - Bus Stops
       summary: Get user by user name
       operationId: getStopsByStopRef
+      x-exegesis-controller: stopsController
       parameters:
         - name: stop_ref
           in: path
