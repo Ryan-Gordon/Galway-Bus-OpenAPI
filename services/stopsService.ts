@@ -3,13 +3,13 @@ import * as turf from '@turf/turf';
 import {Units} from '@turf/helpers';
 import * as moment from 'moment-timezone';
 /**
- * Get PDF links for all routes
- *
- * Returns a Promise.
- **/
+ * getAllStops()
+ * 
+ * Parses the RTPi API for all stops.
+ * Then iterates over the results to get all stops in a 10k radius of Galway city centre.
+ */
 export const getAllStops = async () =>{
-    let stopsArray = new Array();
-    let stop = new Object();
+    let stopsArray = new Array(); //Stops Array to be returned
 
     let endpoint = 'https://data.dublinked.ie/cgi-bin/rtpi';
     return new Promise(async (resolve, reject) =>{
@@ -25,36 +25,43 @@ export const getAllStops = async () =>{
                 resolveWithFullResponse: true,
                 url: endpoint + '/busstopinformation?operator=be'
             };
-            
+            //Async HTTP request
             const response = await request(options)
-            console.log(response)
             let results = response.body['results'];
 
-            console.log(results)
-    
-        console.log("Formatting stops")
-        results.forEach(async (json_stop) =>{
-
-            const formatted_stop = await parse_stop(json_stop);
-            console.log(formatted_stop);
-            if (formatted_stop['galway'] == true) {
-                stopsArray.push(formatted_stop);
-            }
             
-        });
-      }
-      catch{
-        reject('Got an error')
-      }
-      finally{
-          //If we reach here and the promise has already been rejected (Exception encountered) the promise will remain rejected 
-        resolve(stopsArray);
-      }
+    
+            console.log("Formatting stops")
+            results.forEach(async (json_stop) =>{
+                //parse the stop object for useful info
+                const formatted_stop = await parse_stop(json_stop);
+                console.log(formatted_stop);
+
+                //Only take the stops in galway
+                if (formatted_stop['galway'] == true) {
+                    stopsArray.push(formatted_stop);
+                }
+                
+            });
+            }
+            catch{
+                //Gracefully handle problems
+                reject('Got an error')
+            }
+            finally{
+                //If we reach here and the promise has already been rejected (Exception encountered) the promise will remain rejected 
+                resolve(stopsArray);
+            }
     });
   }
-
+/**
+ * getStopsByStopRef
+ * @param stop_ref 
+ * 
+ * takes in a stop reference and gets the times for that stop
+ */
 export const getStopsByStopRef = async (stop_ref) =>{
-    let stop = new Object();
+    let stop = new Object(); //Stops Array to be returned
 
     let endpoint = 'https://data.dublinked.ie/cgi-bin/rtpi';
     //Prepare a promise response for controller
@@ -105,21 +112,25 @@ export const getStopsByStopRef = async (stop_ref) =>{
                     //should probably throw an exception so it catches instead
                     reject('Error parsing stop')
                 })
-            }
+            }//if
         
 
-        });
-    
-    
-  }
-  catch{
-    reject('Got an error')
-  }     
-});
-
-
+        });//forEach
+    }
+    catch{
+        reject('Got an error')
+    }     
+    }); //Promise
 }
-
+/**
+ * getNearbyStops
+ * @param longitude 
+ * @param latitude 
+ * 
+ * Takes in 2 parameters representing a geographic location and finds the nearest stops to that.
+ * 
+ * Not fully working yet.
+ */
 export const getNearbyStops = async (longitude,latitude)=>{
     let stopsArray = new Array();
     let endpoint = 'https://data.dublinked.ie/cgi-bin/rtpi';
@@ -171,11 +182,7 @@ export const getNearbyStops = async (longitude,latitude)=>{
             return d1 - d2;
         }
         //The sort isint working right... yet
-        resolve(await results.sort(sort_distance).slice(0, 10));
-        
-        
-
-        
+        resolve(await results.sort(sort_distance).slice(0, 10)); 
     }catch(e){
         console.log("Catch"+ e)
         reject(e)
