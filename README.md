@@ -4,7 +4,7 @@ The project was built with the desire to make it easier to access information ab
 
 API follows a Design-First approach, firstly building how the route will look, how its return info will look, the format of parameters, etc until the entire design of the API is fleshed out. This approach lowers the barrier to entry for API development and means Business Analysts, QA's and Project Managers can have both more involvement in the development and more insight into what the end result will look like.
 
-
+Project uses Gitflow.
 # Installation 
 
 ## Prerequisites
