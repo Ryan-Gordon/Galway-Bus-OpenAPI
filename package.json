@@ -7,7 +7,9 @@
     "build": "tsc",
     "dev": "ts-node ./server.ts",
     "start": "nodemon ./dist/server.js",
-    "prod": "npm run build && npm run start"
+    "prod": "npm run build && npm run start",
+    "add-contributor": "all-contributors add",
+    "generate-contributors": "all-contributors generate"
   },
   "repository": {
     "type": "git",
@@ -25,7 +27,8 @@
     "moment-timezone": "^0.5.17",
     "request": "^2.87.0",
     "request-promise-native": "^1.0.5",
-    "swagger-tools": "^0.10.3"
+    "swagger-tools": "^0.10.3",
+    "all-contributors-cli": "^4.10.1"
   },
   "bugs": {
     "url": "https://github.com/Ryan-Gordon/Galway-Bus-OpenAPI/issues"
