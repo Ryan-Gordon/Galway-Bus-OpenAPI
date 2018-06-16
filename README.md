@@ -27,19 +27,20 @@ yarn run dev
 
 # Contributors 
 [![All Contributors](https://img.shields.io/badge/all_contributors-1-orange.svg?style=flat)](#contributors)
+This project follows the
+[all-contributors](https://github.com/kentcdodds/all-contributors)
+specification. Contributions of any kind are welcome!
 
-Thanks goes to these wonderful people
+A list of contributors to this project
 ([emoji key](https://github.com/kentcdodds/all-contributors#emoji-key)):
 
 <!-- ALL-CONTRIBUTORS-LIST:START - Do not remove or modify this section -->
 <!-- prettier-ignore -->
-| [<img src="https://avatars1.githubusercontent.com/u/11082710?v=4" width="100px;"/><br /><sub><b>Ryan Gordon</b></sub>](https://github.com/Ryan-Gordon)<br />[💬](#question-Ryan-Gordon "Answering Questions") [📝](#blog-Ryan-Gordon "Blogposts") [🐛](https://github.com/Ryan-Gordon/Galway-Bus-OpenAPI/issues?q=author%3ARyan-Gordon "Bug reports") [💻](https://github.com/Ryan-Gordon/Galway-Bus-OpenAPI/commits?author=Ryan-Gordon "Code") [🎨](#design-Ryan-Gordon "Design") [📖](https://github.com/Ryan-Gordon/Galway-Bus-OpenAPI/commits?author=Ryan-Gordon "Documentation") [📋](#eventOrganizing-Ryan-Gordon "Event Organizing") [💡](#example-Ryan-Gordon "Examples") [💵](#financial-Ryan-Gordon "Financial") [🔍](#fundingFinding-Ryan-Gordon "Funding Finding") [🤔](#ideas-Ryan-Gordon "Ideas, Planning, & Feedback") [🚇](#infra-Ryan-Gordon "Infrastructure (Hosting, Build-Tools, etc)") [📦](#platform-Ryan-Gordon "Packaging/porting to new platform") [🔌](#plugin-Ryan-Gordon "Plugin/utility libraries") [👀](#review-Ryan-Gordon "Reviewed Pull Requests") [📢](#talk-Ryan-Gordon "Talks") [⚠️](https://github.com/Ryan-Gordon/Galway-Bus-OpenAPI/commits?author=Ryan-Gordon "Tests") [🔧](#tool-Ryan-Gordon "Tools") [🌍](#translation-Ryan-Gordon "Translation") [✅](#tutorial-Ryan-Gordon "Tutorials") [📹](#video-Ryan-Gordon "Videos") |
+| [<img src="https://avatars1.githubusercontent.com/u/11082710?v=4" width="100px;"/><br /><sub><b>Ryan Gordon</b></sub>](https://github.com/Ryan-Gordon)<br />[📝](#blog-Ryan-Gordon "Blogposts") [🐛](https://github.com/Ryan-Gordon/Galway-Bus-OpenAPI/issues?q=author%3ARyan-Gordon "Bug reports") [💻](https://github.com/Ryan-Gordon/Galway-Bus-OpenAPI/commits?author=Ryan-Gordon "Code") [🎨](#design-Ryan-Gordon "Design") [📖](https://github.com/Ryan-Gordon/Galway-Bus-OpenAPI/commits?author=Ryan-Gordon "Documentation") [👀](#review-Ryan-Gordon "Reviewed Pull Requests") [⚠️](https://github.com/Ryan-Gordon/Galway-Bus-OpenAPI/commits?author=Ryan-Gordon "Tests") [🔧](#tool-Ryan-Gordon "Tools") [✅](#tutorial-Ryan-Gordon "Tutorials") |
 | :---: |
 <!-- ALL-CONTRIBUTORS-LIST:END -->
 
-This project follows the
-[all-contributors](https://github.com/kentcdodds/all-contributors)
-specification. Contributions of any kind are welcome!
+
 # Acknowledgements  
 
 The idea for this project came from another repo I found on Github. [galwaybus, by @appsandwich](https://github.com/appsandwich/galwaybus) is a project with aims of providing a simple API to access Galway bus info, returning it in a valid JSON format.  
