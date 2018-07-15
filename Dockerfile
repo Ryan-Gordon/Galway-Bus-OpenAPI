@@ -6,7 +6,7 @@ WORKDIR /home/node/app
 # copy and install app dependencies
 COPY package*.json ./
 
-RUN npm install
+RUN yarn
 
 # bundle app source
 COPY . .
