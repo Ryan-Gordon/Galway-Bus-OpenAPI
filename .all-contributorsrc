@@ -22,7 +22,18 @@
         "review",
         "test",
         "tool",
-        "tutorial" 
+        "tutorial"
+      ]
+    },
+    {
+      "login": "appsandwich",
+      "name": "Vinny Coyne",
+      "avatar_url": "https://avatars2.githubusercontent.com/u/496767?v=4",
+      "profile": "http://www.vinnycoyne.com",
+      "contributions": [
+        "design",
+        "example",
+        "ideas"
       ]
     }
   ],
