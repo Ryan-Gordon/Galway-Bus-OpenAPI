@@ -179,7 +179,15 @@ export const getNearbyStops = async (longitude,latitude)=>{
             s1['distance'] = d1;
             s2['distance'] = d2;
         
-            return d1 - d2;
+            if (s1 > s2) {
+                return 1;
+            }
+        
+            if (s1 < s2) {
+                return -1;
+            }
+        
+            return 0;
         }
         //The sort isint working right... yet
         resolve(await results.sort(sort_distance).slice(0, 10)); 

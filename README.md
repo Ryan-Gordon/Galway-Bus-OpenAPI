@@ -4,7 +4,14 @@ The project was built with the desire to make it easier to access information ab
 
 API follows a Design-First approach, firstly building how the route will look, how its return info will look, the format of parameters, etc until the entire design of the API is fleshed out. This approach lowers the barrier to entry for API development and means Business Analysts, QA's and Project Managers can have both more involvement in the development and more insight into what the end result will look like.
 
-Project uses Gitflow.
+
+# Update 04/01/19:
+This project was started last year intending to give an OpenAPI for the Bus service with support for some of the newer technology such as Docker. 
+Since then, the original developer @appsandwich has updated his repo with new features including the new API endpoints. 
+
+With this in mind, you should [check out his repo](https://github.com/appsandwich/galwaybus) for a nice working project with more features.
+
+
 # Installation 
 
 ## Prerequisites
