@@ -22,13 +22,18 @@
     "@turf/turf": "^5.1.6",
     "@types/express": "^4.16.0",
     "@types/request-promise-native": "^1.0.15",
+    "all-contributors-cli": "^4.10.1",
     "exegesis-express": "^1.0.0",
     "express": "^4.16.3",
     "moment-timezone": "^0.5.17",
+    "p-iteration": "^1.1.7",
     "request": "^2.87.0",
     "request-promise-native": "^1.0.5",
     "swagger-tools": "^0.10.3",
-    "all-contributors-cli": "^4.10.1"
+    "all-contributors-cli": "^4.10.1",
+    "nodemon": "^1.11.0",
+    "ts-node": "^3.0.4",
+    "typescript": "^2.3.2"
   },
   "bugs": {
     "url": "https://github.com/Ryan-Gordon/Galway-Bus-OpenAPI/issues"
